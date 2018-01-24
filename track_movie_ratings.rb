@@ -4,7 +4,9 @@
 #3). Delete a movie from the hash
 #4). Display all of the movies and ratings
 
-movies_and_ratings = {}
+movies_and_ratings = {
+  inside_man: 7.3
+}
 
 puts "Welcome to the movies tracker v1.0"
 puts "Please select from the following choices:"
@@ -17,6 +19,16 @@ puts "--display to display all movies and ratings"
 choice = $stdin.gets.chomp.downcase
 print '> '
 
-
-
-# if choice == add
+#Using case statements
+case choice
+  when "add"
+    puts "Added!"
+  when "update"
+    puts "Updated!"
+  when "display"
+    puts "Movies!"
+  when "delete"
+    puts "Deleted!"
+  else
+    puts "Error!"
+end
