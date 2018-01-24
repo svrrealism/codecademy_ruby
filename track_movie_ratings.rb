@@ -4,31 +4,78 @@
 #3). Delete a movie from the hash
 #4). Display all of the movies and ratings
 
-movies_and_ratings = {
+movies = {
   inside_man: 7.3
 }
 
-puts "Welcome to the movies tracker v1.0"
+puts %(
+#{"="*35}
+Welcome to the movies tracker v1.0
+#{"="*35}
+
+)
+
 puts "Please select from the following choices:"
 
-puts "--add to add a movie"
-puts "--update to update a movie"
-puts "--delete to delete a movie"
-puts "--display to display all movies and ratings"
+dont_quit = true
 
-choice = $stdin.gets.chomp.downcase
-print '> '
+while dont_quit
 
-#Using case statements
-case choice
-  when "add"
-    puts "Added!"
-  when "update"
-    puts "Updated!"
-  when "display"
-    puts "Movies!"
-  when "delete"
-    puts "Deleted!"
-  else
-    puts "Error!"
+  puts "--add to add a movie"
+  puts "--update to update a movie"
+  puts "--delete to delete a movie"
+  puts "--display to display all movies and ratings"
+  puts "--quit or --exit to quit this program"
+  print '> '
+
+  choice = $stdin.gets.chomp.downcase
+
+  #Using case statements
+  case choice
+
+    when "add"
+      puts "Enter a movie title to add: "
+      title = $stdin.gets.chomp.to_sym
+      if movies.has_key? title
+        puts "movie already exists"
+      else
+        puts "Enter a number rating for #{title}: "
+        print '> '
+    	  rating = $stdin.gets.chomp.to_i
+        movies[title] = rating
+      end
+
+    when "update"
+      puts "Enter a movie to update"
+      print '> '
+      title = $stdin.gets.chomp.to_sym
+      if movies[title] == nil
+        puts "Movie does not exist in the hash."
+      else
+        puts "Please enter the new rating: "
+        print '> '
+        rating = $stdin.gets.chomp.to_i
+        movies[title] = rating
+      end
+
+    when "display"
+      movies.each {|m, r| puts "\n#{m}: #{r}\n\n" }
+    when "delete"
+      puts "Which movie would you like to delete?: "
+      print '> '
+      title = $stdin.gets.chomp.to_sym
+      if movies[title] == nil
+        puts "No movie to delete!"
+      else
+        movies.delete(title)
+        puts "\n#{title} was deleted!\n\n"
+      end
+
+    when "quit"
+      puts "\nBye!\n"
+      exit(0)
+
+    else
+      puts "Could not recognize the input. Please try again."
+  end
 end
