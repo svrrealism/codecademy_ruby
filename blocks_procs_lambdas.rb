@@ -46,3 +46,55 @@ multiples_of_3 = Proc.new do |n|
 end
 
 puts (1..100).to_a.select(&multiples_of_3)
+
+#Define a proc called cube that raises a number to the third power
+#needed 'puts' or else the untainted array would be returned.
+cube = Proc.new do |i|
+  puts i**3
+end
+
+puts (1..100).to_a.select(&cube)
+#Note that both map and collect do the same thing
+#You don't have to print here for some reason...puts will actually suppress the output
+(1..100).to_a.collect!(&cube)
+[1,2,3].collect!(&cube)
+[1, 2, 3].map!(&cube)
+
+
+
+# The '&' is used to convert the Proc to a block
+
+#Write a Proc that will do a round-down on a set of data using '.floor' method
+round_down = Proc.new do |n|
+  n.floor
+end
+
+floats = [1.2, 3.45, 0.91, 7.727, 11.42, 482.911]
+
+ints  = floats.collect!(&round_down)
+puts ints
+
+
+# Here at the amusement park, you have to be four feet tall
+# or taller to ride the roller coaster. Let's use .select on
+# each group to get only the ones four feet tall or taller.
+
+group_1 = [4.1, 5.5, 3.2, 3.3, 6.1, 3.9, 4.7]
+group_2 = [7.0, 3.8, 6.2, 6.1, 4.4, 4.9, 3.0]
+group_3 = [5.5, 5.1, 3.9, 4.3, 4.9, 3.2, 3.2]
+
+# Complete this as a new Proc
+over_4_feet = Proc.new do |height|
+	height >= 4
+end
+
+# Change these three so that they use your new over_4_feet Proc
+# If we used collect like above, the array that is returned would only
+  # return booleans because of Proc's block logic: height >= 4....
+can_ride_1 = group_1.select!(&over_4_feet)
+can_ride_2 = group_2.select!(&over_4_feet)
+can_ride_3 = group_3.select!(&over_4_feet)
+
+puts can_ride_1
+puts can_ride_2
+puts can_ride_3
