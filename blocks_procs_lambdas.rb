@@ -98,3 +98,26 @@ can_ride_3 = group_3.select!(&over_4_feet)
 puts can_ride_1
 puts can_ride_2
 puts can_ride_3
+
+
+
+
+# THATS CRAZZZZZZZZY!!!!!
+# YOU CAN "MAKE" A FUNCTION "TAKE" A PROC OBJECT!!!!
+
+#create method using yield and Proc, use them together
+
+def greeter
+  yield
+end
+
+phrase = Proc.new do |w|
+  puts "Hello there!"
+end
+#SEEE?!?!?
+greeter(&phrase)
+
+# We did the above to see that the Proc can be called
+# But an easier way is to call it directly
+hi = Proc.new { puts "Hello!" }
+hi.call
