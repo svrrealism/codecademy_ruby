@@ -9,8 +9,6 @@ end
 
 block_test { puts "Now...in the block... " }
 
-
-
 #Can also yield with parameters (pass parameters to yield)
 
 def yield_name(name)
@@ -121,3 +119,102 @@ greeter(&phrase)
 # But an easier way is to call it directly
 hi = Proc.new { puts "Hello!" }
 hi.call
+
+
+strings = ["1", "2", "3"]
+nums = strings.map(&:to_i)
+puts nums
+
+# Recall that you can pass a Ruby method name around with a symbol
+# You can also convert symbols to Procs using '&'
+
+arr = [1,2,3,4,5,6,7,8,9,10]
+
+to_strings = arr.map(&:to_s)
+
+to_strings.each {|i| puts i.class }
+
+
+
+#So the difference between lambdas and procs are:
+  #1. Lambda will return its value back to the function from which it is called.
+    #a). Lambda will check the arguments passed to it and will throw an error
+    #    if there are an improper amount of arguments
+
+  #2. Proc will return a value immediately and the method, if one is being used, will return
+  #   the value of the Proc.
+    #a). Proc will not check for any parameters that are passed to it, returning nil if
+    #    improper amount of arguments are supplied.
+
+
+#Demonstrated like so:
+
+#Proc
+
+def proc_method
+  block = Proc.new { return "This is the block message."}
+  block.call
+  "Method message!"
+end
+
+puts proc_method
+
+def lambda_method
+  block = lambda { return "This is the block messsage."}
+  block.call
+  "Method message!"
+end
+
+puts lambda_method
+
+
+#Recap:
+#In the end, a BLOCK of code can be passed to a select or each function:
+#It can also be passed to yield in a function, where the function breaks out of it's
+#routine to perform the rest of the execution.
+(1..10).to_a.each { |n| puts n if n%2 == 0 }
+
+# def block_function(data)
+#   puts "rawr, block_function execution: #{data}"
+#   yield(data)
+#   puts "And back in the block_function: #{data}"
+# end
+# arr = (1..100).to_a
+# block_function(arr) { |x| x if x%2 == 0 }
+
+#Proc is a block of code that is an object. It returns a value immediately in a method (stops method).
+
+# lambda is a block of code that is a Proc object which returns a value if used in a function, that also checks supplied params
+
+
+
+
+
+odds_n_ends = [:weezard, 42, "Trady Blix", 3, true, 19, 12.345]
+ints = odds_n_ends.select { |n| n if n.is_a? Integer }
+
+
+ages = [23, 101, 7, 104, 11, 94, 100, 121, 101, 70, 44]
+
+under_100 = Proc.new { |n| puts n if n<100}
+
+ages.select(&under_100)
+
+
+
+#Create Lambda to get values less than M
+#Then pass the lambda to a method
+crew = {
+  captain: "Picard",
+  first_officer: "Riker",
+  lt_cdr: "Data",
+  lt: "Worf",
+  ensign: "Ro",
+  counselor: "Troi",
+  chief_engineer: "LaForge",
+  doctor: "Crusher"
+}
+
+first_half = lambda { |key,value| puts value if value < 'M' }
+
+crew.select(&first_half)
