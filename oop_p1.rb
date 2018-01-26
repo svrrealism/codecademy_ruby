@@ -6,3 +6,5 @@ class Person
     @name = name
   end
 end
+
+matz = Person.new("Yukihiro")
