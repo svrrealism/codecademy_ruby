@@ -9,24 +9,12 @@ class Account
     if pin == pin_number
       puts "Balance: #{@balance}"
     else
-      return pin_error
+      puts pin_error
     end
   end
 
-  #Add two private methods, pin and pin error
-
-  private
-  def pin()
-    @pin = 1234
-  end
-
-  def pin_error
-    return "Access denied: incorrect PIN."
-  end
-
-  public
   def withdraw(pin_number, amount)
-    if @pin == pin_number
+    if pin == pin_number
       @balance += amount
       puts "Withdrew #{amount}. New balance: $#{@balance}."
     else
@@ -35,16 +23,26 @@ class Account
   end
 
   def deposit(pin_number, amount)
-    if @pin == pin_number
-      @balance -= amount
+    if pin == pin_number
+      @balance += amount
       puts "Deposited #{amount}. New balance: $#{@balance}"
     else
       puts pin_error
     end
+  end
+
+  private
+
+  def pin
+    @pin = 1234
+  end
+
+  def pin_error
+    "Access denied: incorrect PIN."
   end
 end
 
 
 checking_account = Account.new("zenulv")
 
-checking_account.deposit('1234', '50000000')
+checking_account.deposit(1234, 50000000)
